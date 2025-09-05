@@ -11,6 +11,10 @@ public class CarReservationService {
         this.availableCars = new HashMap<>(availableCars);
     }
 
+    public Map<CarType, Integer> getAvailableCars() {
+        return availableCars;
+    }
+
     public CarReservation reserve(CarType carType, LocalDateTime reservationDateTime, int days) {
         int availableCarsForType = availableCars.get(carType);
         if (availableCarsForType == 0) {
