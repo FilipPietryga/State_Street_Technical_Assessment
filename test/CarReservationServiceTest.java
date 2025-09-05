@@ -22,25 +22,25 @@ class CarReservationServiceTest {
 
     @Test
     void testSuccessfulReservation() {
-        assertEquals(2, service.getAvailableCars().get(CarType.SEDAN));
+        assertEquals(2, service.availableCars().get(CarType.SEDAN));
 
         LocalDateTime reservationTime = LocalDateTime.of(2025, 10, 26, 10, 0);
         CarReservation reservation = service.reserve(CarType.SEDAN, reservationTime, 3);
 
         assertNotNull(reservation);
-        assertEquals(1, service.getAvailableCars().get(CarType.SEDAN));
-        assertEquals(CarType.SEDAN, reservation.getCarType());
-        assertEquals(reservationTime, reservation.getDateTime());
+        assertEquals(1, service.availableCars().get(CarType.SEDAN));
+        assertEquals(CarType.SEDAN, reservation.carType());
+        assertEquals(reservationTime, reservation.dateTime());
     }
 
     @Test
     void testFailedReservationDueToNoCars() {
-        assertEquals(0, service.getAvailableCars().get(CarType.VAN));
+        assertEquals(0, service.availableCars().get(CarType.VAN));
 
         LocalDateTime reservationTime = LocalDateTime.of(2025, 10, 26, 11, 0);
         CarReservation reservation = service.reserve(CarType.VAN, reservationTime, 5);
 
         assertNull(reservation);
-        assertEquals(0, service.getAvailableCars().get(CarType.VAN));
+        assertEquals(0, service.availableCars().get(CarType.VAN));
     }
 }

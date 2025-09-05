@@ -48,7 +48,7 @@ public class Main {
         System.out.println("\n--- Make a Reservation ---");
 
         CarType carType = null;
-        String dateTimeInput = null;
+        LocalDateTime reservationDateTime = null;
         int days = -1;
 
         while (carType == null) {
@@ -62,14 +62,18 @@ public class Main {
             }
         }
 
-        while (dateTimeInput == null) {
+        while (reservationDateTime == null) {
             System.out.print("Enter the reservation date and time (YYYY-MM-DD HH:MM): ");
-            dateTimeInput = scanner.nextLine();
+            String dateTimeInput = scanner.nextLine();
             try {
-                LocalDateTime.parse(dateTimeInput.replace(" ", "T"));
+                LocalDateTime parsedDateTime = LocalDateTime.parse(dateTimeInput.trim().replace(" ", "T"));
+                if (parsedDateTime.isBefore(LocalDateTime.now())) {
+                    System.out.println("Reservation date must be in the future. Please try again.");
+                } else {
+                    reservationDateTime = parsedDateTime;
+                }
             } catch (DateTimeParseException e) {
                 System.out.println("Invalid date and time format. Please use YYYY-MM-DD HH:MM.");
-                dateTimeInput = null;
             }
         }
 
@@ -88,7 +92,6 @@ public class Main {
             }
         }
 
-        LocalDateTime reservationDateTime = LocalDateTime.parse(dateTimeInput.replace(" ", "T"));
         CarReservation reservation = carReservationService.reserve(carType, reservationDateTime, days);
 
         if (reservation != null) {
