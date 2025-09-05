@@ -5,33 +5,11 @@ public class CarReservation {
     private final CarType carType;
     private final LocalDateTime dateOfReservation;
     private final int days;
-    private boolean completed;
 
-    public CarReservation(CarType carType, LocalDateTime dateOfReservation, int days, boolean completed) {
+    public CarReservation(CarType carType, LocalDateTime dateOfReservation, int days) {
         this.carType = carType;
         this.dateOfReservation = dateOfReservation;
         this.days = days;
-        this.completed = completed;
-    }
-
-    public CarType getCarType() {
-        return carType;
-    }
-
-    public LocalDateTime getDateOfReservation() {
-        return dateOfReservation;
-    }
-
-    public int getDays() {
-        return days;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
     }
 
     @Override

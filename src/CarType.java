@@ -1,3 +1,3 @@
 public enum CarType {
-    Sedan, SUV, Van
+    SEDAN, SUV, VAN
 }

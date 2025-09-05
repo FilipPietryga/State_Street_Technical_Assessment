@@ -1,42 +1,42 @@
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class CarReservationService {
 
-    private final Map<CarType, Integer> availableCars = new HashMap<>();
+    private final Map<CarType, Integer> availableCars;
 
-    public CarReservationService() {
-        availableCars.put(CarType.Sedan, 5);
-        availableCars.put(CarType.SUV, 3);
-        availableCars.put(CarType.Van, 4);
+    public CarReservationService(Map<CarType, Integer> availableCars) {
+        this.availableCars = new HashMap<>(availableCars);
     }
 
     public CarReservation reserve(CarType carType, LocalDateTime reservationDateTime, int days) {
         int availableCarsForType = availableCars.get(carType);
         if (availableCarsForType == 0) {
-            return null; // could not create a CarReservation
+            return null;
         }
         availableCars.put(carType, availableCarsForType - 1);
-        return new CarReservation(carType, reservationDateTime, days, false);
+        return new CarReservation(carType, reservationDateTime, days);
     }
 
-    public boolean retreat(CarReservation carReservation) {
-        CarType carType = carReservation.getCarType();
-        Integer availableCarsForType = availableCars.get(carType);
-        if(availableCarsForType == null) {
-            return false;
-        }
-        availableCars.put(carType, availableCarsForType + 1);
-        carReservation.setCompleted(true);
-        return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CarReservationService that = (CarReservationService) o;
+        return Objects.equals(availableCars, that.availableCars);
     }
 
-    public Map<CarType, Integer> checkAvailableCars() {
-        return availableCars;
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(availableCars);
     }
 
-    public Integer checkAvailableCarsForCarType(CarType carType) {
-        return availableCars.get(carType);
+    @Override
+    public String toString() {
+        return "CarReservationService{" +
+                "availableCars=" + availableCars +
+                '}';
     }
 }
